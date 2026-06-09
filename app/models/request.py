@@ -1,0 +1,7 @@
+from pydantic import BaseModel
+
+
+class ChatRequest(BaseModel):
+    query: str
+    session_id: str = ""
+    use_search: bool = False
