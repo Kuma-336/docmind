@@ -14,3 +14,4 @@ class AgentState(TypedDict):
     agent_path: List[str]
     next_agent: str
     use_search: bool
+    history: List[dict]

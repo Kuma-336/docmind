@@ -10,8 +10,11 @@ class Settings(BaseSettings):
     DEBUG: bool = False
 
     OPENAI_API_KEY: str = ""
-    OPENAI_MODEL: str = "gpt-4o-mini"
-    OPENAI_EMBEDDING_MODEL: str = "text-embedding-3-small"
+    OPENAI_BASE_URL: str = ""          # 留空时使用官方地址；填 DeepSeek/其他兼容接口
+    OPENAI_MODEL: str = "deepseek-chat"
+
+    # 本地 HuggingFace 嵌入模型（不消耗 API 额度）
+    EMBEDDING_MODEL: str = "BAAI/bge-small-zh-v1.5"
 
     TAVILY_API_KEY: str = ""
 
@@ -21,6 +24,11 @@ class Settings(BaseSettings):
     CHUNK_SIZE: int = 1000
     CHUNK_OVERLAP: int = 200
     RETRIEVER_TOP_K: int = 5
+    RETRIEVER_SCORE_THRESHOLD: float = 0.5  # 相关度低于此值的结果将被过滤（0~1，越大越严格）
+
+    MAX_UPLOAD_SIZE_MB: int = 20
+    SESSION_DB_PATH: str = "./data/sessions.db"
+    SESSION_HISTORY_LIMIT: int = 3
 
 
 @lru_cache
