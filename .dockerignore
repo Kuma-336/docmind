@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# 虚拟环境
+.venv/
+venv/
+env/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# 环境变量（由 docker-compose env_file 注入，不打入镜像）
+.env
+
+# 持久化数据（通过 volume 挂载，不打入镜像）
+data/
+
+# 测试和开发工具
+tests/
+scripts/
+pytest.ini
+.pytest_cache/
+
+# 文档
+README.md
+*.md
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# 日志
+*.log
+uvicorn.log
+
+# OS
+.DS_Store
+Thumbs.db

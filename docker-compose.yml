@@ -1,0 +1,26 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: docmind:latest
+    container_name: docmind
+    ports:
+      - "8000:8000"
+    # 通过 .env 文件注入密钥，密钥不硬编码在此文件中
+    env_file:
+      - .env
+    volumes:
+      # 持久化向量数据库
+      - ./data/chroma:/app/data/chroma
+      # 持久化上传文件
+      - ./data/uploads:/app/data/uploads
+      # 持久化会话 SQLite 数据库（整个 data 目录挂载，覆盖 sessions.db）
+      - ./data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3

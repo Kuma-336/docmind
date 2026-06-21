@@ -3,12 +3,13 @@ import logging
 import traceback
 import uuid
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import StreamingResponse
 
 from app.models.request import ChatRequest
 from app.models.response import ChatResponse
 from app.graph.builder import run_graph, stream_graph
+from app.storage.session_store import get_session_store
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -63,3 +64,13 @@ async def chat_stream(request: ChatRequest) -> StreamingResponse:
             "X-Accel-Buffering": "no",
         },
     )
+
+
+@router.get("/history/{session_id}")
+async def get_history(
+    session_id: str,
+    limit: int = Query(default=20, ge=1, le=100),
+):
+    store = get_session_store()
+    messages = store.get_history(session_id, limit=limit)
+    return {"session_id": session_id, "messages": messages}
